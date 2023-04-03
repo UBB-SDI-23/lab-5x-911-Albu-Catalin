@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PublishingHouseListPage = () => {
   const [publishingHouses, setPublishingHouses] = useState<any[] | undefined>();
-  const [filter, setFilter] = useState<any>(false);
+  const [filter, setFilter] = useState<any>();
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
@@ -20,13 +20,20 @@ const PublishingHouseListPage = () => {
   }, []);
   useEffect(() => {
     console.log('change');
-    if (publishingHouses && filter) {
+    if (publishingHouses && filter !== undefined) {
       const data = [...publishingHouses];
-      data.sort((a, b) => {
-        if (a.name > b.name) return 1;
-        if (a.name < b.name) return -1;
-        return 0;
-      });
+      if (filter)
+        data.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        });
+      else
+        data.sort((a, b) => {
+          if (a.name < b.name) return 1;
+          if (a.name > b.name) return -1;
+          return 0;
+        });
       setPublishingHouses(data);
     }
   }, [filter]);
@@ -40,7 +47,7 @@ const PublishingHouseListPage = () => {
       >
         +Add a new publishing house
       </Button>
-      <Button variant="outlined" onClick={() => setFilter(true)}>
+      <Button variant="outlined" onClick={() => setFilter(!filter)}>
         Filter
       </Button>
       <ul className={styles.list}>
