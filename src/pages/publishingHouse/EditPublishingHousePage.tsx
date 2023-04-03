@@ -58,7 +58,7 @@ const EditPublishingHousePage = () => {
         setPublishingHouse(data);
         setName(data.name);
         setWebsite(data.website);
-        setPhone(data.phone);
+        setPhone(data.phoneNumber);
         setEmail(data.email);
         setCountry(data.address.country);
         setYearOfEstablishment(data.yearOfEstablishment);
